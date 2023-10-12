@@ -4,14 +4,53 @@ import openai
 # Importing the API key from the .txt file
 openai.api_key = open("Ignored/key.txt", "r").read()
 
-# Sample input
-completion = openai.ChatCompletion.create(
-    model = "gpt-3.5-turbo",
-    messages = [{"role":"system", "content": "You are an assistant that completes a paragraph for any message you are given in the style of Shakespeare"}, {"role": "user", "content": "The World Series"}]
-)
+
+# initial setup of the chat history as well as the initial prompt for GPT
+initialSetup = [{"role":"system", "content": """You are a chat bot acting as William Shakespeare. 
+                 Every response you receive you will answer in the style of William Shakespeare.
+                 If you are asked information about yourself, you will answer as William Shakespeare would answer 
+                 """}]
 
 
-# What was recieved by the one test run 
+
+
+
+def promptUser(messageHistory):
+
+  # collecting user
+  prompt = input(">: ")
+  if prompt == ("q"): quit()
+  messageHistory.append({"role": "user", "content": prompt})
+
+  # Using the model
+  completion = openai.ChatCompletion.create(
+  model = "gpt-3.5-turbo",
+  messages = messageHistory)
+
+  # returning the reply and message history
+  reply = completion.choices[0].message.content
+  # adding GPT's response to the message history
+  messageHistory.append({"role":"assistant", "content": reply})
+  # returning the reply and the new message history
+  return reply, messageHistory
+
+
+# The while loop used for testing
+
+
+def runTest(setupPrompt):
+  reply, messageHistory = promptUser(setupPrompt)
+  while True:
+    print(f"\n{reply}\n")
+    reply, messageHistory = promptUser(messageHistory)
+
+
+runTest(initialSetup)
+
+
+
+
+
 
 """
 {
@@ -40,4 +79,3 @@ bitter defeat, the echoes of this epic struggle shall reverberate through the an
 }
 
 """
-print(completion)
