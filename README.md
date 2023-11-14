@@ -6,8 +6,6 @@ use the openai API to generate simple responses from a prompt.
 
 team members
 
-Gunnar Babicz (backend)
-
 Austin Kulow (backend)
 
 Audrey Mills (frontend)
