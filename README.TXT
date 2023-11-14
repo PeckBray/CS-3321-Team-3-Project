@@ -1,5 +1,3 @@
-Gunnar's branch for the GPT AI
-
 
 ---------- SETTING UP YOUR ENVIRONMENT ----------
 
